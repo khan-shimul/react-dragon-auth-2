@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
+  const location = useLocation();
+  // console.log("location in the login page", location);
+  const navigate = useNavigate();
 
   // Handle Login
   const handleLogin = (e) => {
@@ -16,6 +19,8 @@ const Login = () => {
     loginUser(email, password)
       .then((result) => {
         console.log(result.user);
+        // navigate after login
+        navigate(location?.state ? location.state : "/");
       })
       .catch((error) => console.error(error));
   };
@@ -65,7 +70,7 @@ const Login = () => {
           </div>
         </form>
         <p className="text-center">
-          Dont’t Have An Account?{" "}
+          Do Not Have An Account?{" "}
           <Link className="text-red-500" to="/register">
             Register
           </Link>
